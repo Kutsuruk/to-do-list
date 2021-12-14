@@ -7,7 +7,12 @@
     align-content: stretch;
     align-items: center;
 
-    background-color: lightgray;
+    background-color: #fff;
+    border: 1px solid dodgerblue;
+    margin: 3% auto;
+    width: 60%;
+    padding: 2% 0 0 0;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .main__heading {
@@ -17,14 +22,31 @@
     text-decoration: underline dodgerblue;
 }
 
+.input__wrapper {
+    padding: 1% 0 5% 0;
+}
+
+.input__wrapper button {
+    margin: 5% 0 0 0;
+    padding: 1%;
+}
+
+.todo-list__wrapper {
+    padding: 0 0 2% 0;
+}
+
 /* To-do List */
 .todo-list__wrapper {
 
 }
 
 /* To-do item */
-.todo-item__wrapper {
+.todo-item__wrapper button {
+    margin-left: 5px;
+}
 
+.todo-item__wrapper button:hover {
+    color: #ff0000;
 }
 
 .todo-item__checkbox {

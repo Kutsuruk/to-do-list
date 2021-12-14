@@ -1,9 +1,10 @@
 import React, {FC, useState} from "react";
 import {ITodo} from "../types/types";
 import Checkbox from '@mui/material/Checkbox';
-import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
 import '../styles/style.css';
+import {IconButton} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 interface TodoItemProps {
     todo: ITodo;
@@ -18,7 +19,7 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
     }
 
     return(
-        <div>
+        <>
             <div
                 className='todo-item__wrapper'
                 key={todo.id}
@@ -31,8 +32,11 @@ const TodoItem: FC<TodoItemProps> = ({todo}) => {
                 <span className='todo-item__title'>
                     {todo.title.charAt(0).toUpperCase() + todo.title.slice(1)}
                 </span>
+                <IconButton aria-label="delete" size="small">
+                    <DeleteIcon fontSize="small" />
+                </IconButton>
             </div>
-        </div>
+        </>
     )
 }
 
