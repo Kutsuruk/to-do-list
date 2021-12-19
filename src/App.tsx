@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, useState} from "react";
 import {TextField, Button} from "@mui/material";
 import {ITask} from "./types/types";
+import TodoTask from "./components/TodoTask";
 
 const App: FC = () => {
 
@@ -20,9 +21,16 @@ const App: FC = () => {
         console.log(todoList)
     }
 
+    const generateKey = (pre: string) => {
+        return `${ pre }_${ new Date().getTime() }`
+    }
+
     return(
         <div className="App">
             <div className="todo__header">
+                <div className="header-title">
+                    To-do List
+                </div>
 
                 <div className="header-input">
                     <TextField id="inputForm"
@@ -41,7 +49,11 @@ const App: FC = () => {
                 </div>
 
             </div>
-            <div className="todo__main"></div>
+            <div className="todo__main">
+                {todoList.map((task: ITask, key: number) => {
+                    return <TodoTask key={key} />
+                })}
+            </div>
         </div>
     )
 }
