@@ -1,16 +1,33 @@
-import React, {FC} from "react";
+import React, {useState} from "react";
+import {ITask} from "../types/types";
+import {Checkbox} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
-const TodoTask: FC = () => {
+interface TodoTaskProps {
+    task: ITask;
+    completeTask(completedTaskName: string): void;
+}
 
-    interface TodoTaskProps {
-        taskName: string;
-        completed: boolean;
+const TodoTask = ({ task, completeTask }: TodoTaskProps) => {
+
+    const [status, setStatus] = useState<boolean>(task.completed)
+
+    const changeStatus = (e: any): void => {
+        e.preventDefault()
+        setStatus(!status)
     }
 
     return(
-        <>
-            Task
-        </>
+        <div className='task-item'>
+            <Checkbox checked={task.completed}
+                      onClick={changeStatus}
+            />
+            {task.taskName}
+            <IconButton aria-label="delete" onClick={() => completeTask(task.taskName)}>
+                <DeleteIcon />
+            </IconButton>
+        </div>
     )
 }
 
