@@ -1,23 +1,48 @@
-import React from "react";
+import React, {ChangeEvent, FC, useState} from "react";
+import {TextField, Button} from "@mui/material";
+import {ITask} from "./types/types";
 
-const App = () => {
+const App: FC = () => {
+
+    const [task, setTask] = useState<string>('')
+    const [status, setStatus] = useState<boolean>(false)
+    const [todoList, setTodoList] = useState<ITask[]>([])
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        setTask(event.target.value)
+    }
+
+    const addTask = (e: any): void => {
+        e.preventDefault()
+        const newTask = {taskName: task, completed: status}
+        setTodoList([...todoList, newTask])
+        setTask('')
+        console.log(todoList)
+    }
 
     return(
-        <React.Fragment>
-            <div className="app__wrapper">
-                <div className="heading__wrapper">
+        <div className="App">
+            <div className="todo__header">
 
+                <div className="header-input">
+                    <TextField id="inputForm"
+                               type="text"
+                               label="Write task"
+                               variant="standard"
+                               onChange={handleChange}
+                               value={task}
+                    />
+                    <Button variant="outlined"
+                            size="small"
+                            onClick={addTask}
+                    >
+                        Add
+                    </Button>
                 </div>
 
-                <div className="input__wrapper">
-
-                </div>
-
-                <div className="todo-list__wrapper">
-
-                </div>
             </div>
-        </React.Fragment>
+            <div className="todo__main"></div>
+        </div>
     )
 }
 
