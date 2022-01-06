@@ -1,0 +1,30 @@
+.todoHeader {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.todoHeader .headerTitle {
+  font-family: "Roboto Light", sans-serif;
+  font-size: 3em;
+  color: #000;
+  text-decoration: underline #2574d4;
+}
+.todoHeader .headerInput {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 10% 0 0 0;
+}
+
+.todoMain {
+  margin: 10% auto;
+  width: 70%;
+}
+
+/*# sourceMappingURL=App.module.css.map */

@@ -1,0 +1,7 @@
+@import "./src/style/variables";
+
+.taskItem {
+    font-size: 1.2em;
+    font-family: $list-font;
+    padding: 0 0 0 5%;
+}

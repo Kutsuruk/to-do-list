@@ -1,73 +1,73 @@
-import React, {ChangeEvent, FC, useState} from "react";
-import {TextField, Button} from "@mui/material";
-import {ITask} from "./types/types";
-import TodoTask from "./components/TodoTask";
+import React, { FC, useState } from 'react';
+import { ITask } from 'core/types/task';
+import TaskForm from 'components/TaskForm';
+import TodoTask from 'components/TodoTask';
+import SharedButton from 'shared/Button';
+import styles from 'style/App.module.scss';
 
 const App: FC = () => {
+	const [todoList, setTodoList] = useState<ITask[]>([]);
+	const [editingTodoList, setEditingTodoList] = useState<ITask | null>(null);
+	const [editingTodoText, setEditingTodoText] = useState('');
+	const [addNewTaskModalOpen, setAddNewTaskModalOpen] = useState(false);
 
-    const [task, setTask] = useState<string>('')
-    const [status, setStatus] = useState<boolean>(false)
-    const [ID, setID] = useState<number>(0)
-    const [todoList, setTodoList] = useState<ITask[]>([])
+	const addTask = (addedTask: ITask): void => {
+		setTodoList([...todoList, addedTask]);
+		setAddNewTaskModalOpen(false);
+	};
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        setTask(event.target.value)
-    }
+	const completeToggleTask = (id: string, completed: boolean): void => {
+		const newTodoList = todoList.map(task => (task.id === id ? { ...task, completed } : task));
+		setTodoList(newTodoList);
+	};
 
-    const addTask = (e: any): void => {
-        e.preventDefault()
-        const newTask = {id: ID, taskName: task, completed: status}
-        setTodoList([...todoList, newTask])
-        setStatus(newTask.completed)
-        setID(newTask.id)
-        console.log(todoList)
-    }
+	const deleteTask = (id: string) => {
+		const newTodoList = todoList.filter(task => task.id !== id);
+		setTodoList(newTodoList);
+	};
 
-    const completeTask = (completedTaskName: string): void => {
-        setTodoList(todoList.filter(task => {
-            return task.taskName != completedTaskName
-        }))
-    }
+	const confirmEditTask = (id: string) => {
+		const updatedTodos: ITask[] = todoList.map(todo => {
+			if (todo.id === id) {
+				const editedTodo: ITask = { ...todo, taskName: editingTodoText };
+				return editedTodo;
+			}
+			return todo;
+		});
+		setTodoList(updatedTodos);
+		setEditingTodoList(null);
+	};
 
-    const generateKey = (pre: number): number => {
-        return Number(`${ pre }_${ new Date().getTime() }`)
-    }
+	return (
+		<>
+			<div className={styles.todoHeader}>
+				<div className={styles.headerTitle}>To-do List</div>
 
-    return (
-        <div className="App">
-            <div className="todo__header">
-                <div className="header-title">
-                    To-do List
-                </div>
-
-                <div className="header-input">
-                    <TextField id="inputForm"
-                               type="text"
-                               label="Write task"
-                               variant="standard"
-                               onChange={handleChange}
-                               value={task}
-                    />
-                    <Button variant="outlined"
-                            size="small"
-                            onClick={addTask}
-                    >
-                        Add
-                    </Button>
-                </div>
-
-            </div>
-            <div className="todo__main">
-                <div className="todo-wrapper">
-                    <div className="task__wrapper">
-                        {todoList.map((task: ITask) => {
-                            return <TodoTask key={task.id} task={task} completeTask={completeTask}/>
-                        })}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+				<div className={styles.headerInput}>
+					<SharedButton clickHandler={() => setAddNewTaskModalOpen(true)} title="Add new task" />
+					{addNewTaskModalOpen && <TaskForm submitClickHandler={addTask} />}
+				</div>
+			</div>
+			<div className={styles.todoMain}>
+				<div className="todoWrapper">
+					<div className="taskWrapper">
+						{todoList.map((task: ITask) => (
+							<TodoTask
+								key={task.id}
+								task={task}
+								completeToggle={completeToggleTask}
+								deleteTask={deleteTask}
+								editTask={confirmEditTask}
+								todoEditingData={editingTodoList}
+								setEditedTodo={setEditingTodoList}
+								setEditingText={setEditingTodoText}
+							/>
+						))}
+					</div>
+				</div>
+			</div>
+		</>
+	);
+};
 
 export default App;
