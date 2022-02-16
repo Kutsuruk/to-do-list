@@ -1,0 +1,13 @@
+@mixin flex-structure {
+	display: flex;
+	flex-wrap: nowrap;
+	align-content: stretch;
+}
+
+@mixin error-message {
+	display: block;
+	color: red;
+	font-family: sans-serif;
+	font-size: 0.9em;
+	margin: 2% 0 0 0;
+}

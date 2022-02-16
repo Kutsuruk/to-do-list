@@ -1,0 +1,38 @@
+@import "variables";
+@import "mixins";
+
+.todoHeader {
+  @include flex-structure;
+
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .headerTitle {
+    font-family: $main-font;
+    font-size: 3em;
+    color: $font-color;
+    text-decoration: underline $elems-color;
+  }
+
+  .headerInput {
+    @include flex-structure;
+
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    margin: $margin-ten;
+  }
+}
+
+.todoMain {
+  margin: 10% auto;
+  width: 70%;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+}
